@@ -73,16 +73,17 @@ function login(){
 	var nombre=document.getElementById('nick').value;
 	var password=document.getElementById('contraseña').value;
 	for (var i = usuarios.length - 1; i >= 0; i--) {
-		for (var j = usuarios[i].length - 1; j >= 0; j--) {
+		
 			if (usuarios[i][0]==nombre && usuarios[i][3]==password) {
 				id=i;
 				window.location.replace("home.html");
 				
-			}
-		}
+			}else{
+       alert('No coincide con ningun usuario')
+		
 	}
-	alert('No coincide con ningun usuario')
 
+}
 
 }
 
