@@ -1,5 +1,5 @@
 var usuarios=[];
-var id=0;
+var id;
 var lista=[];
 $( document ).ready(function() {
     
@@ -20,25 +20,22 @@ $( document ).ready(function() {
    if (lista_de_post==null) {
    	lista=[];
    }else{
-   	var lista=JSON.parse(lista_de_post);
+   	 lista=JSON.parse(lista_de_post);
    }
    	 
    	 var url=window.location.href;
    	 var urlsplit=url.split("/");
    	 if (urlsplit[urlsplit.length-1]=="home.html") {
-   	 	if (lista.length>0) {
-   	 	for (var i = lista.length - 1; i >= 0; i--) {
-   	 		var post=document.createElement("div");
-   	 		if (id==lista[i][1]) {
+   	 	if (lista.length>0) {  	 
+        for (var i = lista.length - 1; i >= 0; i--) {
+            if (lista[i][1]==id) {
+              var div= document.getElementById('post-area').innerHTML +=" <div class=\"container\"><textarea disabled=\"true\">"+lista[i][0] + "</textarea><button class=\"btn btn-info\" onclick=\"editar()\"> editar</button></div><button onclick=\"eliminar()\">X</button>";
+            }else{
+                 var div= document.getElementById('post-area').innerHTML +=" <div class=\"container\"><textarea disabled=\"true\">"+lista[i][0] + "</div>"
+            }
+        }
 
-   	 			post.innerHTML= "<textarea disabled=\"true\" id=\""+id+"\"">+lista[i][0]+"</textarea> <button class=\"btn btn-info\" onclick=>Cambiar</button>";
-   	 			document.getElementById('post-area').appendChild(post);
-   	 		}else{
-   	 		post.innerHTML = "<p>"+lista[i][0]+"</p>";	
-   	 		document.getElementById('post-area').appendChild(post);
-   	 		}
-   	 	}
-	}
+      	}
    	 	
    	 	
    	 }
@@ -91,14 +88,28 @@ function login(){
 function compartir(){
 	/*id del usuario actual*/
 	var post= [document.getElementById('post').value,id];
-	lista.unshift(post);
+	lista.push(post);
 	localStorage.setItem('post',JSON.stringify(lista));
 for (var i = lista.length - 1; i >= 0; i--) {
 	var publicacion=document.createElement("div");
-	publicacion.innerHTML= "<textarea disabled=\"true\" id=\""+id+"\"">+lista[i][0]+"</textarea> <button class=\"btn btn-info\" onclick=>Cambiar</button>";
+	publicacion.innerHTML= "<textarea disabled=\"true\" id=\""+id+"\"">+lista[i][0]+"</textarea> <button class=\"btn btn-info\" onclick=>Cambiar</button><button onclick=\"eliminar()\">X</button>";
 }
 
 
 
+
+}
+
+function editar(){
+var texto= getElementById()
+  this.setAttribute("disabled","false");
+
+
+}
+function eliminar(){
+  var post= [document.getElementById('post').value,id];
+  lista.pop(post);
+  localStorage.setItem('post',JSON.stringify(lista));
+  location.reload();
 
 }
